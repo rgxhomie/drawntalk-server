@@ -7,7 +7,7 @@ function initializeWebSocket(server) {
     server,
     {
         cors: {
-            origin: 'http://localhost:8080',
+            origin: 'https://www.drawntalk.site',
             methods: ['GET', 'POST'],
             allowedHeaders: ['auth-token', 'Origin', 'X-Requested-With', 'Content-Type', 'Accept']
         }
