@@ -26,7 +26,11 @@ function initializeWebSocket(server) {
 
     socket.on('draw', ({to, ...data}) => {
         socket.to(to).emit('draw', data);
-        canvasStates[to].push(data);
+        try {
+          canvasStates[to].push(data);
+        } catch (error => {
+          canvasStates[to] = [];
+        })
     });
 
     socket.on('clearCanvas', (to) => {
