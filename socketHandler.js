@@ -30,7 +30,7 @@ function initializeWebSocket(server) {
           canvasStates[to].push(data);
         } catch (error) {
           canvasStates[to] = [];
-        })
+        }
     });
 
     socket.on('clearCanvas', (to) => {
