@@ -24,17 +24,17 @@ app.use((_, res, next) => {
 app.use(bodyParser.json({limit: '5mb', extended: true}));
 
 // DB Stuff
-const mongoUri = process.env.MONGO_DB_CONNECTION_URL;
-mongoose.connect(mongoUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => {
-    console.log('DB connected...');
-  })
-  .catch((error) => {
-    console.error(`Error, while connecting to MongoDB`, error);
-  });
+// const mongoUri = process.env.MONGO_DB_CONNECTION_URL;
+// mongoose.connect(mongoUri, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+//   .then(() => {
+//     console.log('DB connected...');
+//   })
+//   .catch((error) => {
+//     console.error(`Error, while connecting to MongoDB`, error);
+//   });
 
 // Routes
 const RoomsRoute = require('./routes/Rooms');

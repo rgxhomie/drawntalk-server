@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Room = require('../models/Room');
 
-const { sendNotification } = require('./utils/TelegramNotificator');
+const { sendNotification } = require('../utils/TelegramNotificator');
 
 // Warm up server
 router.get('/warmup', (req, res) => {
