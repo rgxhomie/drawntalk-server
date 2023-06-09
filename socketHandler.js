@@ -15,7 +15,10 @@ function initializeWebSocket(server) {
   );
 
   io.on('connection', (socket) => {
-    console.log('New user connected');
+    console.log('Socket connection with a user established.');
+    
+    // In case server will be restarted and people will be in the room at this moment we need to reconnect them to current room.
+    socket.emit('roomJoinRequested');
 
     socket.on('joinRoom', (roomId) => {
         socket.join(roomId);
