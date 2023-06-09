@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const Room = require('../models/Room');
 
+const { sendNotification } = require('./utils/TelegramNotificator');
+
 // Warm up server
 router.get('/warmup', (req, res) => {
     res.send({
@@ -56,6 +58,8 @@ router.post('/create', async (req, res) => {
         const newRoom = new Room(req.body.room);
         const savedRoom = await newRoom.save();
 
+        sendNotification('Someone has just created a room.');
+
         res.json(savedRoom);
     } catch (error) {
         console.error(`Error occured, while creating a room`, error);
@@ -79,6 +83,8 @@ router.delete('/delete/:id', async (req, res) => {
             }
         );
     
+        sendNotification('Someone has just deleted a room.');
+
         res.json(deletedRoom);
     } catch (error) {
         console.error(`Error, while deleting a room.`, error);

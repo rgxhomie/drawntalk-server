@@ -1,4 +1,5 @@
 const socketIO = require('socket.io');
+const { sendNotification } = require('./utils/TelegramNotificator');
 
 let canvasStates = {};
 
@@ -25,6 +26,7 @@ function initializeWebSocket(server) {
         canvasStates[roomId] = canvasStates[roomId] ? canvasStates[roomId] : [];
         socket.emit('currentCanvasState', canvasStates[roomId]);
         console.log(`User joined to ${roomId}`);
+        sendNotification(`Some user joined room: ${roomId}`);
     });
 
     socket.on('draw', ({to, ...data}) => {

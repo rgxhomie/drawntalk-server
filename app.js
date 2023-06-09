@@ -43,6 +43,7 @@ app.use('/rooms', RoomsRoute);
 // Initialize WebSocket
 initializeWebSocket(server);
 
+
 // Start Server
 server.listen(process.env.PORT || 3001, () => {
   console.log(`Listening at ${process.env.PORT}...`);
