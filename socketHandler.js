@@ -1,6 +1,7 @@
 const socketIO = require('socket.io');
 const { sendNotification } = require('./utils/TelegramNotificator');
 
+const drawingActions = {};
 let canvasStates = {};
 
 function initializeWebSocket(server) {
@@ -23,19 +24,29 @@ function initializeWebSocket(server) {
 
     socket.on('joinRoom', (roomId) => {
         socket.join(roomId);
+
         canvasStates[roomId] = canvasStates[roomId] ? canvasStates[roomId] : [];
         socket.emit('currentCanvasState', canvasStates[roomId]);
-        console.log(`User joined to ${roomId}`);
+
         sendNotification(`Some user joined room: ${roomId}`);
     });
 
     socket.on('draw', ({to, ...data}) => {
+        if (!drawingActions[to]) {
+          drawingActions[to] = true;
+          sendNotification(`Someone started to draw in room ${to}`);
+        }
+
         socket.to(to).emit('draw', data);
         try {
           canvasStates[to].push(data);
         } catch (error) {
           canvasStates[to] = [];
         }
+    });
+
+    socket.on('revertTo', ({to, state}) => {
+      socket.to(to).emit('revertTo', state);
     });
 
     socket.on('clearCanvas', (to) => {
