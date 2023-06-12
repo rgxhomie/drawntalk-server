@@ -22,6 +22,10 @@ function initializeWebSocket(server) {
     // In case server will be restarted and people will be in the room at this moment we need to reconnect them to current room.
     socket.emit('roomJoinRequested');
 
+    socket.on('uniqueJoin', (roomId) => {
+      sendNotification(`Unique connection in ${roomId}`);
+    });
+
     socket.on('joinRoom', (roomId) => {
         socket.join(roomId);
 
